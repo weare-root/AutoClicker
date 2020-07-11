@@ -1,0 +1,2 @@
+# AutoClicker
+cooler autoclicker
