@@ -1,4 +1,8 @@
-#wrapper {
-  padding: 30px;
-  margin: 30px;
+box#wrapper {
+  padding: 20px;
+}
+
+#title {
+  font-size: 2em;
+  font-weight: bold;
 }

@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 )
@@ -36,6 +37,7 @@ func main() {
 
 	// Connect function to application shutdown event, this is not required.
 	application.Connect("shutdown", func() {
+		stopClicker()
 		log.Println("application shutdown")
 	})
 
@@ -52,17 +54,30 @@ func onActivate(application *gtk.Application) {
 	obj, err := builder.GetObject("main_window")
 	errorCheck(err)
 
+	// add signals
+	// Map the handlers to callback functions, and connect the signals
+	// to the Builder.
+	signals := map[string]interface{}{
+		"activation_btn_clicked": activationBtnClicked,
+		"custom_btn_clicked":     customBtnClicked,
+	}
+
+	builder.ConnectSignals(signals)
+
 	// Verify that the object is a pointer to a gtk.ApplicationWindow.
 	win, err := isApplicationWindow(obj)
 	errorCheck(err)
 
+	//add styling
 	provider, err := gtk.CssProviderNew()
 	errorCheck(err)
-
 	err = provider.LoadFromPath("./ui/main.css")
 	errorCheck(err)
+	screen := win.GetScreen()
+	gtk.AddProviderForScreen(screen, provider, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+	win.AddEvents(int(gdk.KEY_PRESS_MASK))
 
-	win.SetApplication(application)
+	application.AddWindow(win)
 	// Show the Window and all of its components.
 	win.Show()
 	gWin = win
