@@ -60,6 +60,11 @@ func onActivate(application *gtk.Application) {
 	signals := map[string]interface{}{
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
+		"rbLeft_toggled":         rbLeftToggled,
+		"rbMiddle_toggled":       rbMiddleToggled,
+		"rbRight_toggled":        rbRightToggled,
+		"rbCustom_toggled":       rbCustomToggled,
+		"rbHold_toggled":         rbHoldToggled,
 	}
 
 	builder.ConnectSignals(signals)
@@ -67,6 +72,7 @@ func onActivate(application *gtk.Application) {
 	// Verify that the object is a pointer to a gtk.ApplicationWindow.
 	win, err := isApplicationWindow(obj)
 	errorCheck(err)
+	gWin = win
 
 	//add styling
 	provider, err := gtk.CssProviderNew()
@@ -80,7 +86,6 @@ func onActivate(application *gtk.Application) {
 	application.AddWindow(win)
 	// Show the Window and all of its components.
 	win.Show()
-	gWin = win
 
 	// go startClicker(10, 15, 0.5, 1000, "left")
 	// time.Sleep(time.Second * 3)

@@ -26,11 +26,12 @@ func doClick(ratio float32, timespan int, mb string) {
  */
 func startClicker(lower float32, upper float32, ratio float32, timespan int, mb string) {
 	toggled = true
+OUTER:
 	for toggled {
 		cps := int(lower + rand.Float32()*(upper-lower))
 		for i := 0; i < cps; i++ {
 			if !toggled {
-				break
+				break OUTER
 			}
 			doClick(ratio, timespan/cps, mb)
 		}
@@ -39,4 +40,9 @@ func startClicker(lower float32, upper float32, ratio float32, timespan int, mb 
 
 func stopClicker() {
 	toggled = false
+}
+
+func toggle() bool {
+	toggled = !toggled
+	return toggled
 }

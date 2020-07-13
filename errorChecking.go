@@ -72,6 +72,14 @@ func isScrolledWindow(obj glib.IObject) (*gtk.ScrolledWindow, error) {
 	return nil, errors.New("not a *gtk.ScrolledWindow")
 }
 
+func isButton(obj glib.IObject) (*gtk.Button, error) {
+	// Make type assertion (as per gtk.go).
+	if search, ok := obj.(*gtk.Button); ok {
+		return search, nil
+	}
+	return nil, errors.New("not a *gtk.Button")
+}
+
 func errorCheck(e error) {
 	if e != nil {
 		// panic for any errors.

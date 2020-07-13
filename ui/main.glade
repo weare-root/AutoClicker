@@ -45,6 +45,20 @@
             <property name="spacing">30</property>
             <property name="baseline_position">top</property>
             <child>
+              <object class="GtkCheckButton" id="btEnabled">
+                <property name="label" translatable="yes">Enable AutoClicker</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkFrame">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -129,6 +143,7 @@
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rbSwitch</property>
+                                <signal name="toggled" handler="rbHold_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -174,7 +189,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -247,7 +262,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -284,6 +299,7 @@
                                 <property name="halign">start</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
+                                <signal name="toggled" handler="rbLeft_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -301,6 +317,7 @@
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rbLeft</property>
+                                <signal name="toggled" handler="rbMiddle_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -318,6 +335,7 @@
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rbLeft</property>
+                                <signal name="toggled" handler="rbRight_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -340,7 +358,7 @@
                             <property name="spacing">5</property>
                             <property name="homogeneous">True</property>
                             <child>
-                              <object class="GtkRadioButton">
+                              <object class="GtkRadioButton" id="rbCustom">
                                 <property name="label" translatable="yes">Custom taste</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -349,6 +367,7 @@
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rbLeft</property>
+                                <signal name="toggled" handler="rbCustom_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -405,7 +424,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>
