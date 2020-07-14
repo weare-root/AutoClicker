@@ -79,6 +79,29 @@ func isButton(obj glib.IObject) (*gtk.Button, error) {
 	}
 	return nil, errors.New("not a *gtk.Button")
 }
+func isRadioButton(obj glib.IObject) (*gtk.RadioButton, error) {
+	// Make type assertion (as per gtk.go).
+	if search, ok := obj.(*gtk.RadioButton); ok {
+		return search, nil
+	}
+	return nil, errors.New("not a *gtk.RadioButton")
+}
+
+func isScale(obj glib.IObject) (*gtk.Scale, error) {
+	// make type assertion (as per gtk.go).
+	if search, ok := obj.(*gtk.Scale); ok {
+		return search, nil
+	}
+	return nil, errors.New("not a *gtk.scale")
+}
+
+func isCheckButton(obj glib.IObject) (*gtk.CheckButton, error) {
+	// make type assertion (as per gtk.go).
+	if search, ok := obj.(*gtk.CheckButton); ok {
+		return search, nil
+	}
+	return nil, errors.New("not a *gtk.CheckButton")
+}
 
 func errorCheck(e error) {
 	if e != nil {

@@ -13,10 +13,27 @@ const appID = "at.wunderwuzis.AutoClicker"
 
 var (
 	gApplication *gtk.Application
-	gEntry       *gtk.Entry
-	gList        *gtk.ListBox
 	gBuilder     *gtk.Builder
 	gWin         *gtk.ApplicationWindow
+)
+
+// definitions for the elements
+var (
+	rbLeft   *gtk.RadioButton
+	rbMiddle *gtk.RadioButton
+	rbRight  *gtk.RadioButton
+	rbCustom *gtk.RadioButton
+	rbHold   *gtk.RadioButton
+
+	cbEnabled *gtk.CheckButton
+
+	btKey    *gtk.Button
+	btCustom *gtk.Button
+
+	enKey    *gtk.Entry
+	enCustom *gtk.Entry
+
+	scCPS *gtk.Scale
 )
 
 func main() {
@@ -60,11 +77,7 @@ func onActivate(application *gtk.Application) {
 	signals := map[string]interface{}{
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
-		"rbLeft_toggled":         rbLeftToggled,
-		"rbMiddle_toggled":       rbMiddleToggled,
-		"rbRight_toggled":        rbRightToggled,
 		"rbCustom_toggled":       rbCustomToggled,
-		"rbHold_toggled":         rbHoldToggled,
 	}
 
 	builder.ConnectSignals(signals)
@@ -87,7 +100,27 @@ func onActivate(application *gtk.Application) {
 	// Show the Window and all of its components.
 	win.Show()
 
+	getWidgets()
+
 	// go startClicker(10, 15, 0.5, 1000, "left")
 	// time.Sleep(time.Second * 3)
 	// stopClicker()
+}
+
+func getWidgets() {
+	rbLeft = getRadioButton("rbLeft")
+	rbMiddle = getRadioButton("rbMiddle")
+	rbRight = getRadioButton("rbRight")
+	rbCustom = getRadioButton("rbCustom")
+	rbHold = getRadioButton("rbHold")
+
+	cbEnabled = getCheckButton("cbEnabled")
+
+	btKey = getButton("btKey")
+	btCustom = getButton("btCustom")
+
+	enKey = getEntry("enKey")
+	enCustom = getEntry("enCustom")
+
+	scCPS = getScale("scCPS")
 }

@@ -1,56 +1,29 @@
 package main
 
-import (
-	"log"
-)
-
-var (
-	running = false
-	before  = ""
-)
-
 func activationBtnClicked() {
-	running = false
-	//activation_btn_clicked
-	log.Println("asd")
+	stopClicker()
+	if listening {
+		listening = false
+	} else {
+		go listenToButtons(btKey, enKey)
+	}
 }
 
 func customBtnClicked() {
-	// EvChan := hook.Start()
-	// defer hook.End()
-
-	// for ev := range EvChan {
-	// 	fmt.Println("hook: ", ev)
-	// }
+	stopClicker()
 }
 
-// code for listening to the group of radio buttons
-func rbLeftToggled() {
-	clicksChanged("rbLeft")
-}
-func rbMiddleToggled() {
-	clicksChanged("rbMiddle")
-}
-func rbRightToggled() {
-	clicksChanged("rbRight")
-}
+// listen to the custom radio button
 func rbCustomToggled() {
-	clicksChanged("rbCustom")
-}
-
-func clicksChanged(new string) {
 	btObj, err := gBuilder.GetObject("btCustom")
 	errorCheck(err)
 	bt, err := isButton(btObj)
 	errorCheck(err)
-	if new == "rbCustom" {
-		bt.SetSensitive(true)
-	} else {
-		bt.SetSensitive(false)
-	}
-}
 
-// code for listening the hold and switch buttons at the top
-func rbHoldToggled() {
+	rbObj, err := gBuilder.GetObject("rbCustom")
+	errorCheck(err)
+	rb, err := isRadioButton(rbObj)
+	errorCheck(err)
 
+	bt.SetSensitive(rb.GetActive())
 }
