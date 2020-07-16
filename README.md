@@ -9,12 +9,12 @@ Figma: https://www.figma.com/file/Wjc2fEXADEVzW5atpqO6hf/AutoClicker?node-id=0%3
 Download the compiled version from our Discord Server [here](https://discord.gg/7uFGcAE "Murli GmbH")
 
 ## Todo 📋
-[ ] Set Activation Key/MB(=Mouse Button)
-[ ] Change MB to be clicked
-[ ] Change Click Speed
-[ ] Change Timespan
-[ ] Change Click Ratio
-[ ] Add Keypress Functionality
-[ ] Make UI more appealing
+- [ ] Set Activation Key/MB(=Mouse Button)
+- [ ] Change MB to be clicked
+- [ ] Change Click Speed
+- [ ] Change Timespan
+- [ ] Change Click Ratio
+- [ ] Add Keypress Functionality
+- [ ] Make UI more appealing
 
 by Adiber 🐊 & TheCrether
