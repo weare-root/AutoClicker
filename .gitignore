@@ -18,4 +18,10 @@
 *.glade~
 \#*glade*\#
 
+# the exe
 AutoClicker
+
+# stuff for packaging i guess
+*.rar
+dlls
+build
