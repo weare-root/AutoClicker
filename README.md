@@ -7,14 +7,18 @@ This AutoClicker has a lot of features✨, demanded by one of my friends, to mak
 
 [Figma: https://www.figma.com/file/Wjc2fEXADEVzW5atpqO6hf/AutoClicker][1]
 
+## How
+
+This is made with Go and GTK
+
 ## Download
 
 Download the compiled version from our Discord Server [here](https://discord.gg/7uFGcAE "Murli GmbH")
 
 ## Todo 📋
 
-- [ ] Set Activation Key/MB(=Mouse Button)
-- [ ] Change MB to be clicked
+- [x] Set Activation Key/MB(=Mouse Button)
+- [x] Change MB to be clicked
 - [ ] Change Click Speed
 - [ ] Change Timespan
 - [ ] Change Click Ratio

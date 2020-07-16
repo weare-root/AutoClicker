@@ -3,6 +3,7 @@ package main
 func activationBtnClicked() {
 	stopClicker()
 	if listening {
+		btKey.SetLabel("Taste auswählen")
 		listening = false
 	} else {
 		go listenToButtons(btKey, enKey)
