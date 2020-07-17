@@ -10,7 +10,6 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": [],
       "group": "build"
     },
     {
@@ -24,7 +23,6 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": [],
       "group": "build"
     },
     {
@@ -37,7 +35,18 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Release Build",
+      "type": "shell",
+      "command": "./release.sh",
+      "windows": {
+        "command": "cmd \"/C release.bat\""
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "group": "build"
     }
   ]
