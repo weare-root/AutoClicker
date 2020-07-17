@@ -15,11 +15,12 @@
     },
     {
       "label": "Build package and execute",
-      "type": "shell",
-      "command": "go build && ./AutoClicker",
+      "type": "process",
+      "command": "./AutoClicker",
       "windows": {
-        "command": "go build && .\\AutoClicker.exe"
+        "command": "AutoClicker.exe"
       },
+      "dependsOn": ["Build package"],
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -28,10 +29,10 @@
     },
     {
       "label": "Only execute package",
-      "type": "shell",
+      "type": "process",
       "command": "./AutoClicker",
       "windows": {
-        "command": ".\\AutoClicker.exe"
+        "command": "AutoClicker.exe"
       },
       "options": {
         "cwd": "${workspaceFolder}"
