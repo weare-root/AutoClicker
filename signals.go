@@ -8,21 +8,35 @@ import (
 
 func activationBtnClicked() {
 	stopClicker()
-	if listening {
-		btKey.SetLabel("Taste auswählen")
-		listening = false
+	if !listening {
+		shouldListen = true
+		listeningBtn = btKey
+		listeningEn = enKey
+		execMainThread(func() {
+			btKey.SetLabel("ESC zum abbrechen")
+		})
 	} else {
-		go listenToButtons(btKey, enKey)
+		shouldListen = false
+		execMainThread(func() {
+			btKey.SetLabel("Taste auswählen")
+		})
 	}
 }
 
 func customBtnClicked() {
 	stopClicker()
-	if listening {
-		btCustom.SetLabel("Taste auswählen")
-		listening = false
+	if !listening {
+		shouldListen = true
+		listeningBtn = btCustom
+		listeningEn = enCustom
+		execMainThread(func() {
+			btCustom.SetLabel("ESC zum abbrechen")
+		})
 	} else {
-		go listenToButtons(btCustom, enCustom)
+		shouldListen = false
+		execMainThread(func() {
+			btCustom.SetLabel("Taste auswählen")
+		})
 	}
 }
 
@@ -39,11 +53,6 @@ func rbCustomToggled() {
 	errorCheck(err)
 
 	bt.SetSensitive(rb.GetActive())
-}
-
-func enableToggled() {
-	toggled = false
-	enabled = cbEnabled.GetActive()
 }
 
 func onDurationInsert(en *gtk.Entry, text string) bool {

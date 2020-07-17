@@ -1,13 +1,11 @@
 package main
 
 import (
-	"github.com/gotk3/gotk3/glib"
-	"github.com/gotk3/gotk3/gtk"
-	hook "github.com/robotn/gohook"
-)
+	"os"
+	"path"
+	"path/filepath"
 
-var (
-	listening = false
+	"github.com/gotk3/gotk3/glib"
 )
 
 func isHoldingMode() bool {
@@ -17,42 +15,6 @@ func isHoldingMode() bool {
 	errorCheck(err)
 
 	return rbHold.GetActive()
-}
-
-func listenToButtons(button *gtk.Button, toChange *gtk.Entry) {
-	listening = true
-	button.SetLabel("Drück ESC um aufzuhören")
-	channel := hook.Start()
-
-	for ev := range channel {
-		if !listening {
-			hook.End()
-			activationBtn, _ = toChange.GetText()
-			execMainThread(func() {
-				button.SetLabel("Taste auswählen")
-			})
-			break
-		}
-		if ev.Kind == hook.KeyUp {
-			// https://github.com/robotn/gohook/blob/master/tables.go
-			// information where I got the codes from
-			if ev.Rawcode == keytoraw["escape"] {
-				hook.End()
-				listening = false
-				execMainThread(func() {
-					button.SetLabel("Taste auswählen")
-				})
-				break
-			} else if ev.Rawcode == keytoraw["enter"] ||
-				ev.Rawcode == keytoraw["shift"] ||
-				ev.Rawcode == keytoraw["ctrl"] {
-				continue
-			}
-			execMainThread(func() {
-				toChange.SetText(raw2key[ev.Rawcode])
-			})
-		}
-	}
 }
 
 // execMainThread is just a wrapper around glib.IdleAdd in case I forget the function name lol
@@ -69,8 +31,18 @@ func getKey() string {
 	} else if rbLeft.GetActive() {
 		return "left"
 	} else if rbMiddle.GetActive() {
-		return "middle"
+		return "center"
 	}
 
 	return "right"
+}
+
+func getPath(p ...string) string {
+	base, err := os.Executable()
+	if err != nil {
+		base = os.Args[0]
+	}
+	str, err := filepath.Abs(path.Join(filepath.Dir(base), path.Join(p...)))
+	errorCheck(err)
+	return str
 }

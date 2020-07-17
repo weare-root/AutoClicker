@@ -117,3 +117,9 @@ func errorCheck(e error) {
 		log.Panic(e)
 	}
 }
+
+func logOnError(e error, msg string) {
+	if e != nil {
+		log.Println(msg)
+	}
+}

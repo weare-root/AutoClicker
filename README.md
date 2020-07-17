@@ -21,7 +21,7 @@ Download the compiled version from our Discord Server [here](https://discord.gg/
 - [x] Change MB to be clicked
 - [x] Change Click Speed
 - [x] Change Timespan
-- [ ] Change Click Ratio
+- [x] Change Click Ratio
 - [ ] Add Keypress Functionality
 - [ ] Make UI more appealing
 

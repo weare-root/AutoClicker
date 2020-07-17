@@ -3,21 +3,31 @@ package main
 import (
 	"log"
 	"os"
+	"runtime"
+	"time"
 
 	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
+	hook "github.com/robotn/gohook"
 )
 
 const appID = "at.wunderwuzis.AutoClicker"
 
 var (
-	gApplication  *gtk.Application
-	gBuilder      *gtk.Builder
-	gWin          *gtk.ApplicationWindow
+	gApplication *gtk.Application
+	gBuilder     *gtk.Builder
+	gWin         *gtk.ApplicationWindow
+)
+
+// variables for runtime
+var (
 	activationBtn = ""
-	enabled       = false
 	duration      = 0
+	listening     = false
+	listeningBtn  *gtk.Button
+	listeningEn   *gtk.Entry
+	shouldListen  = false
 )
 
 // definitions for the elements
@@ -28,20 +38,21 @@ var (
 	rbCustom *gtk.RadioButton
 	rbHold   *gtk.RadioButton
 
-	cbEnabled *gtk.CheckButton
-
 	btKey    *gtk.Button
 	btCustom *gtk.Button
 
-	enKey      *gtk.Entry
-	enCustom   *gtk.Entry
-	enDuration *gtk.Entry
+	enKey    *gtk.Entry
+	enCustom *gtk.Entry
 
 	scCPSLower  *gtk.Scale
 	scCPSHigher *gtk.Scale
+	scTimespan  *gtk.Scale
+	scRatio     *gtk.Scale
 
-	adLower  *gtk.Adjustment
-	adHigher *gtk.Adjustment
+	adLower    *gtk.Adjustment
+	adHigher   *gtk.Adjustment
+	adTimespan *gtk.Adjustment
+	adRatio    *gtk.Adjustment
 )
 
 func main() {
@@ -49,6 +60,13 @@ func main() {
 	application, err := gtk.ApplicationNew(appID, glib.APPLICATION_FLAGS_NONE)
 	errorCheck(err)
 	gApplication = application
+
+	// set dark mode :)
+	settings, err := gtk.SettingsGetDefault()
+	logOnError(err, "could not get settings")
+	if err == nil {
+		settings.Set("gtk-application-prefer-dark-theme", true)
+	}
 
 	// Connect function to application startup event, this is not required.
 	application.Connect("startup", func() {
@@ -71,7 +89,9 @@ func main() {
 }
 
 func onActivate(application *gtk.Application) {
-	builder, err := gtk.BuilderNewFromFile("./ui/main.glade")
+	log.Println("application activation")
+	log.Println("UI is being built")
+	builder, err := gtk.BuilderNewFromFile(getPath("ui", "main.glade"))
 	errorCheck(err)
 	gBuilder = builder
 
@@ -86,11 +106,11 @@ func onActivate(application *gtk.Application) {
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
 		"rbCustom_toggled":       rbCustomToggled,
-		"enable_toggled":         enableToggled,
 		"on_duration_insert":     onDurationInsert,
 	}
 
 	builder.ConnectSignals(signals)
+	log.Println("connected signals")
 
 	// Verify that the object is a pointer to a gtk.ApplicationWindow.
 	win, err := isApplicationWindow(obj)
@@ -98,12 +118,27 @@ func onActivate(application *gtk.Application) {
 	gWin = win
 
 	//add styling
+	screen := win.GetScreen()
+
+	// add a gtk theme for Windows
+	if runtime.GOOS == "windows" {
+		theme, err := gtk.CssProviderNew()
+		errorCheck(err)
+
+		err = theme.LoadFromPath(getPath("ui", "win10-theme", "gtk.css"))
+		errorCheck(err)
+
+		gtk.AddProviderForScreen(screen, theme, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+	}
+
+	// add own customizations (not much lol)
 	provider, err := gtk.CssProviderNew()
 	errorCheck(err)
-	err = provider.LoadFromPath("./ui/main.css")
+	err = provider.LoadFromPath(getPath("ui", "main.css"))
 	errorCheck(err)
-	screen := win.GetScreen()
 	gtk.AddProviderForScreen(screen, provider, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+	log.Println("Applied custom styles")
+
 	win.AddEvents(int(gdk.KEY_PRESS_MASK))
 
 	application.AddWindow(win)
@@ -112,7 +147,7 @@ func onActivate(application *gtk.Application) {
 
 	getWidgets()
 
-	enDuration.Connect("insert-text", onDurationInsert)
+	go listenToKeyboard()
 
 	// go startClicker(10, 15, 0.5, 1000, "left")
 	// time.Sleep(time.Second * 3)
@@ -126,18 +161,95 @@ func getWidgets() {
 	rbCustom = getRadioButton("rbCustom")
 	rbHold = getRadioButton("rbHold")
 
-	cbEnabled = getCheckButton("cbEnabled")
-
 	btKey = getButton("btKey")
 	btCustom = getButton("btCustom")
 
 	enKey = getEntry("enKey")
 	enCustom = getEntry("enCustom")
-	enDuration = getEntry("enDuration")
 
 	scCPSLower = getScale("scCPSLower")
 	scCPSHigher = getScale("scCPSHigher")
+	scTimespan = getScale("scTimespan")
+	scRatio = getScale("scRatio")
 
 	adLower = getAdjustment("adLower")
 	adHigher = getAdjustment("adHigher")
+	adTimespan = getAdjustment("adTimespan")
+	adRatio = getAdjustment("adRatio")
+}
+
+// doTheDirty is the listening function
+func listenToKeyboard() {
+	isDown := false
+	channel := hook.Start()
+	lastChanged := getCurrentMillis()
+	log.Println("started listening to keyboard")
+
+	for ev := range channel {
+		if shouldListen && !listening {
+			listening = true
+		} else if !shouldListen {
+			listening = false
+		}
+
+		if listening {
+			if ev.Kind == hook.KeyUp {
+				if ev.Rawcode == keytoraw["escape"] {
+					shouldListen = false
+					execMainThread(func() {
+						listeningBtn.SetLabel("Taste auswählen")
+					})
+					continue
+				} else if ev.Rawcode == keytoraw["enter"] ||
+					ev.Rawcode == keytoraw["shift"] ||
+					ev.Rawcode == keytoraw["ctrl"] {
+					continue
+				}
+				activationBtn = raw2key[ev.Rawcode]
+				execMainThread(func() {
+					listeningEn.SetText(raw2key[ev.Rawcode])
+				})
+			}
+			continue
+		}
+
+		if ev.Rawcode == keytoraw[activationBtn] && activationBtn != "" {
+			// check if its a hold for the holding mode
+			if ev.Kind == hook.KeyHold && isHoldingMode() {
+				if !isDown {
+					// start the holding if it isnt already started
+					log.Println("HOLDING start")
+					isDown = true
+					go startClicker(float32(adLower.GetValue()), float32(adHigher.GetValue()), float32(adRatio.GetValue()/100.0), int(adTimespan.GetValue()))
+				}
+			} else if ev.Kind == hook.KeyUp {
+				if getCurrentMillis()-lastChanged < 500 {
+					continue
+				}
+				lastChanged = getCurrentMillis()
+
+				if isHoldingMode() {
+					log.Println("HOLDING stop")
+					// stop when holding mode is on
+					isDown = false
+					stopClicker()
+				} else if !isDown {
+					log.Println("SWITCHING start")
+					// start when switching mode is on
+					isDown = true
+					go startClicker(float32(adLower.GetValue()), float32(adHigher.GetValue()), float32(adRatio.GetValue()/100.0), int(adTimespan.GetValue()))
+				} else {
+					// stop when switching mode is on
+					log.Println("SWITCHING stop")
+					isDown = false
+					stopClicker()
+				}
+			}
+
+		}
+	}
+}
+
+func getCurrentMillis() int64 {
+	return time.Now().UnixNano() / 1000000
 }

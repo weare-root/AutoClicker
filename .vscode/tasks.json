@@ -27,10 +27,10 @@
     },
     {
       "label": "Only execute package",
-      "type": "process",
+      "type": "shell",
       "command": "./AutoClicker",
       "windows": {
-        "command": "AutoClicker.exe"
+        "command": "cmd \\C AutoClicker.exe"
       },
       "options": {
         "cwd": "${workspaceFolder}"

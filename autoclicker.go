@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"math/rand"
 	"strings"
 	"time"
@@ -18,9 +19,9 @@ func doClick(ratio float32, timespan int, mb string) {
 }
 
 func doPress(ratio float32, timespan int, key string) {
-	robotgo.KeyToggle(key)
+	robotgo.KeyToggle(key, "down")
 	time.Sleep(time.Duration(int(float32(timespan)*ratio)) * time.Millisecond)
-	robotgo.KeyToggle(key)
+	robotgo.KeyToggle(key, "up")
 	time.Sleep(time.Duration(int(float32(timespan)*(1-ratio))) * time.Millisecond)
 }
 
@@ -46,6 +47,7 @@ OUTER:
 
 func startClicker(lower float32, upper float32, ratio float32, timespan int) {
 	key := strings.TrimSpace(getKey())
+	log.Println(key)
 	if key == "" {
 		return
 	}
