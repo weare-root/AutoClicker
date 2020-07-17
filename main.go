@@ -215,13 +215,11 @@ func listenToKeyboard() {
 
 		if ev.Rawcode == keytoraw[activationBtn] && activationBtn != "" {
 			// check if its a hold for the holding mode
-			if ev.Kind == hook.KeyHold && isHoldingMode() {
-				if !isDown {
-					// start the holding if it isnt already started
-					log.Println("HOLDING start")
-					isDown = true
-					go startClicker(float32(adLower.GetValue()), float32(adHigher.GetValue()), float32(adRatio.GetValue()/100.0), int(adTimespan.GetValue()))
-				}
+			if ev.Kind == hook.KeyHold && isHoldingMode() && !isDown {
+				// start the holding if it isnt already started
+				log.Println("HOLDING start")
+				isDown = true
+				go startClicker(float32(adLower.GetValue()), float32(adHigher.GetValue()), float32(adRatio.GetValue()/100.0), int(adTimespan.GetValue()))
 			} else if ev.Kind == hook.KeyUp {
 				if getCurrentMillis()-lastChanged < 500 {
 					continue

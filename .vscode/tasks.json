@@ -14,10 +14,10 @@
     },
     {
       "label": "Build package and execute",
-      "type": "process",
+      "type": "shell",
       "command": "./AutoClicker",
       "windows": {
-        "command": "AutoClicker.exe"
+        "command": "cmd \"/C AutoClicker.exe\""
       },
       "dependsOn": ["Build package"],
       "options": {
@@ -30,7 +30,7 @@
       "type": "shell",
       "command": "./AutoClicker",
       "windows": {
-        "command": "cmd \\C AutoClicker.exe"
+        "command": "cmd \"/C AutoClicker.exe\""
       },
       "options": {
         "cwd": "${workspaceFolder}"

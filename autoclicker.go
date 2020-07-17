@@ -19,10 +19,8 @@ func doClick(ratio float32, timespan int, mb string) {
 }
 
 func doPress(ratio float32, timespan int, key string) {
-	robotgo.KeyToggle(key, "down")
+	robotgo.KeyTap(key)
 	time.Sleep(time.Duration(int(float32(timespan)*ratio)) * time.Millisecond)
-	robotgo.KeyToggle(key, "up")
-	time.Sleep(time.Duration(int(float32(timespan)*(1-ratio))) * time.Millisecond)
 }
 
 // startClicker starts the clicking process
@@ -42,12 +40,12 @@ OUTER:
 			}
 			doClick(ratio, timespan/cps, mb)
 		}
+		time.Sleep(time.Duration(int(1000-timespan)) * time.Millisecond)
 	}
 }
 
 func startClicker(lower float32, upper float32, ratio float32, timespan int) {
 	key := strings.TrimSpace(getKey())
-	log.Println(key)
 	if key == "" {
 		return
 	}
@@ -66,6 +64,7 @@ OUTER:
 			}
 			doPress(ratio, timespan/cps, key)
 		}
+		time.Sleep(time.Duration(int(1000-timespan)) * time.Millisecond)
 	}
 }
 
