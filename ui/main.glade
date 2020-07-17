@@ -17,6 +17,20 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="adRatio">
+    <property name="lower">5</property>
+    <property name="upper">100</property>
+    <property name="value">50</property>
+    <property name="step_increment">5</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adTimespan">
+    <property name="lower">10</property>
+    <property name="upper">1000</property>
+    <property name="value">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkApplicationWindow" id="main_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">AutoClicker</property>
@@ -51,22 +65,6 @@
             <property name="orientation">vertical</property>
             <property name="spacing">30</property>
             <property name="baseline_position">top</property>
-            <child>
-              <object class="GtkCheckButton" id="cbEnabled">
-                <property name="label" translatable="yes">Enable AutoClicker</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">center</property>
-                <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="enable_toggled" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
             <child>
               <object class="GtkFrame">
                 <property name="visible">True</property>
@@ -131,6 +129,7 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="halign">start</property>
                             <property name="label" translatable="yes">Aktivierungsmodus</property>
                           </object>
                           <packing>
@@ -142,37 +141,12 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Dauer (in Sekunden)</property>
+                            <property name="label" translatable="yes">Dauer in der die Klicks ausgeführt
+werden sollen (in Millisekunden)</property>
                             <property name="xalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="enDuration">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="text" translatable="yes">0</property>
-                            <property name="xalign">0.5</property>
-                            <property name="placeholder_text" translatable="yes">0</property>
-                            <property name="input_purpose">digits</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">für unendlich lange 0 eingeben</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
                             <property name="top_attach">2</property>
                           </packing>
                         </child>
@@ -185,6 +159,7 @@
                             <property name="halign">start</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
+                            <property name="group">rbSwitch</property>
                             <signal name="toggled" handler="rbHold_toggled" swapped="no"/>
                           </object>
                           <packing>
@@ -205,6 +180,51 @@
                           <packing>
                             <property name="left_attach">2</property>
                             <property name="top_attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="scTimespan">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">adTimespan</property>
+                            <property name="fill_level">1000</property>
+                            <property name="round_digits">0</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">right</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">2</property>
+                            <property name="width">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Klickrate (Verhältnis von Mausklick
+zu Wartezeit) (in Prozent)</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="scRatio">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">adRatio</property>
+                            <property name="fill_level">50</property>
+                            <property name="round_digits">0</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">right</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">3</property>
+                            <property name="width">2</property>
                           </packing>
                         </child>
                       </object>
@@ -549,6 +569,19 @@
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label" translatable="yes">Konfiguration speichern</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
