@@ -103,6 +103,14 @@ func isCheckButton(obj glib.IObject) (*gtk.CheckButton, error) {
 	return nil, errors.New("not a *gtk.CheckButton")
 }
 
+func isAdjustment(obj glib.IObject) (*gtk.Adjustment, error) {
+	// make type assertion (as per gtk.go).
+	if adjustment, ok := obj.(*gtk.Adjustment); ok {
+		return adjustment, nil
+	}
+	return nil, errors.New("not a *gtk.CheckButton")
+}
+
 func errorCheck(e error) {
 	if e != nil {
 		// panic for any errors.

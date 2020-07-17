@@ -1,5 +1,11 @@
 package main
 
+import (
+	"strconv"
+
+	"github.com/gotk3/gotk3/gtk"
+)
+
 func activationBtnClicked() {
 	stopClicker()
 	if listening {
@@ -12,6 +18,12 @@ func activationBtnClicked() {
 
 func customBtnClicked() {
 	stopClicker()
+	if listening {
+		btCustom.SetLabel("Taste auswählen")
+		listening = false
+	} else {
+		go listenToButtons(btCustom, enCustom)
+	}
 }
 
 // listen to the custom radio button
@@ -27,4 +39,21 @@ func rbCustomToggled() {
 	errorCheck(err)
 
 	bt.SetSensitive(rb.GetActive())
+}
+
+func enableToggled() {
+	toggled = false
+	enabled = cbEnabled.GetActive()
+}
+
+func onDurationInsert(en *gtk.Entry, text string) bool {
+	before, _ := en.GetText()
+	parsed, err := strconv.ParseInt(before+text, 10, 64)
+	if err != nil {
+		defer execMainThread(func() {
+			en.SetText(before)
+		})
+	}
+	duration = int(parsed)
+	return false
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	// "time"
 
 	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/glib"
@@ -13,9 +12,12 @@ import (
 const appID = "at.wunderwuzis.AutoClicker"
 
 var (
-	gApplication *gtk.Application
-	gBuilder     *gtk.Builder
-	gWin         *gtk.ApplicationWindow
+	gApplication  *gtk.Application
+	gBuilder      *gtk.Builder
+	gWin          *gtk.ApplicationWindow
+	activationBtn = ""
+	enabled       = false
+	duration      = 0
 )
 
 // definitions for the elements
@@ -31,10 +33,15 @@ var (
 	btKey    *gtk.Button
 	btCustom *gtk.Button
 
-	enKey    *gtk.Entry
-	enCustom *gtk.Entry
+	enKey      *gtk.Entry
+	enCustom   *gtk.Entry
+	enDuration *gtk.Entry
 
-	scCPS *gtk.Scale
+	scCPSLower  *gtk.Scale
+	scCPSHigher *gtk.Scale
+
+	adLower  *gtk.Adjustment
+	adHigher *gtk.Adjustment
 )
 
 func main() {
@@ -79,6 +86,8 @@ func onActivate(application *gtk.Application) {
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
 		"rbCustom_toggled":       rbCustomToggled,
+		"enable_toggled":         enableToggled,
+		"on_duration_insert":     onDurationInsert,
 	}
 
 	builder.ConnectSignals(signals)
@@ -103,6 +112,8 @@ func onActivate(application *gtk.Application) {
 
 	getWidgets()
 
+	enDuration.Connect("insert-text", onDurationInsert)
+
 	// go startClicker(10, 15, 0.5, 1000, "left")
 	// time.Sleep(time.Second * 3)
 	// stopClicker()
@@ -122,6 +133,11 @@ func getWidgets() {
 
 	enKey = getEntry("enKey")
 	enCustom = getEntry("enCustom")
+	enDuration = getEntry("enDuration")
 
-	scCPS = getScale("scCPS")
+	scCPSLower = getScale("scCPSLower")
+	scCPSHigher = getScale("scCPSHigher")
+
+	adLower = getAdjustment("adLower")
+	adHigher = getAdjustment("adHigher")
 }

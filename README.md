@@ -19,8 +19,8 @@ Download the compiled version from our Discord Server [here](https://discord.gg/
 
 - [x] Set Activation Key/MB(=Mouse Button)
 - [x] Change MB to be clicked
-- [ ] Change Click Speed
-- [ ] Change Timespan
+- [x] Change Click Speed
+- [x] Change Timespan
 - [ ] Change Click Ratio
 - [ ] Add Keypress Functionality
 - [ ] Make UI more appealing

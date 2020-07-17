@@ -1,14 +1,13 @@
 package main
 
 import (
-	"github.com/gotk3/gotk3/gtk"
 	"github.com/gotk3/gotk3/glib"
+	"github.com/gotk3/gotk3/gtk"
 	hook "github.com/robotn/gohook"
 )
 
 var (
 	listening = false
-
 )
 
 func isHoldingMode() bool {
@@ -28,6 +27,7 @@ func listenToButtons(button *gtk.Button, toChange *gtk.Entry) {
 	for ev := range channel {
 		if !listening {
 			hook.End()
+			activationBtn, _ = toChange.GetText()
 			execMainThread(func() {
 				button.SetLabel("Taste auswählen")
 			})
@@ -55,6 +55,22 @@ func listenToButtons(button *gtk.Button, toChange *gtk.Entry) {
 	}
 }
 
+// execMainThread is just a wrapper around glib.IdleAdd in case I forget the function name lol
 func execMainThread(f interface{}) {
 	glib.IdleAdd(f)
+}
+
+func getKey() string {
+	if rbCustom.GetActive() {
+		// custom radio button is selected
+		str, err := enCustom.GetText()
+		errorCheck(err)
+		return str
+	} else if rbLeft.GetActive() {
+		return "left"
+	} else if rbMiddle.GetActive() {
+		return "middle"
+	}
+
+	return "right"
 }

@@ -40,3 +40,9 @@ func getObject(id string) glib.IObject {
 	errorCheck(err)
 	return obj
 }
+
+func getAdjustment(id string) *gtk.Adjustment {
+	ad, err := isAdjustment(getObject(id))
+	errorCheck(err)
+	return ad
+}
