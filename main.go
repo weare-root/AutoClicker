@@ -154,6 +154,7 @@ func onActivate(application *gtk.Application) {
 	// stopClicker()
 }
 
+// getWidgets gets all the necessary widgets for later use
 func getWidgets() {
 	rbLeft = getRadioButton("rbLeft")
 	rbMiddle = getRadioButton("rbMiddle")
@@ -178,7 +179,7 @@ func getWidgets() {
 	adRatio = getAdjustment("adRatio")
 }
 
-// doTheDirty is the listening function
+// listenToKeyboard handles the logic for listening to the keyboard
 func listenToKeyboard() {
 	isDown := false
 	channel := hook.Start()
@@ -205,7 +206,10 @@ func listenToKeyboard() {
 					ev.Rawcode == keytoraw["ctrl"] {
 					continue
 				}
-				activationBtn = raw2key[ev.Rawcode]
+				// check if the button for the listening key is pressed
+				if listeningBtn == btKey {
+					activationBtn = raw2key[ev.Rawcode]
+				}
 				execMainThread(func() {
 					listeningEn.SetText(raw2key[ev.Rawcode])
 				})
