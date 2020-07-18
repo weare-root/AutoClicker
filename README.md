@@ -22,8 +22,8 @@ Download the compiled version from our Discord Server [here](https://discord.gg/
 - [x] Change Click Speed
 - [x] Change Timespan
 - [x] Change Click Ratio
-- [ ] Add Keypress Functionality
-- [ ] Make UI more appealing
+- [x] Add Keypress Functionality
+- [x] Make UI more appealing
 
 made by [@0Adiber][2] 🐊 & [@TheCrether][3]
 

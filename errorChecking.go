@@ -121,5 +121,6 @@ func errorCheck(e error) {
 func logOnError(e error, msg string) {
 	if e != nil {
 		log.Println(msg)
+		log.Println(e)
 	}
 }

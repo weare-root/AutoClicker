@@ -103,7 +103,7 @@ func onActivate(application *gtk.Application) {
 	// get the window
 	win := getApplicationWindow("main_window")
 
-	err = win.SetIconFromFile(getPath("ui", "icon.jpg"))
+	err = win.SetIconFromFile(getPath("ui", "icon.png"))
 	logOnError(err, "could not set icon")
 
 	//add styling

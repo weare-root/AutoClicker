@@ -5,6 +5,6 @@ mkdir build\ui
 
 xcopy ui build\ui /E /y
 
-go build -o build
+go build -o build -ldflags -H=windowsgui
 
 echo DONT FORGET TO COPY THE DLLS INCASE YOU HAVENT DONE THAT

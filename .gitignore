@@ -23,5 +23,6 @@ AutoClicker
 
 # stuff for packaging i guess
 *.rar
+*.zip
 dlls
 build
