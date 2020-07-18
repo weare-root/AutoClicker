@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"os"
-	"runtime"
 	"time"
 
 	"github.com/gotk3/gotk3/gdk"
@@ -104,19 +103,11 @@ func onActivate(application *gtk.Application) {
 	// get the window
 	win := getApplicationWindow("main_window")
 
+	err = win.SetIconFromFile(getPath("ui", "icon.jpg"))
+	logOnError(err, "could not set icon")
+
 	//add styling
 	screen := win.GetScreen()
-
-	// add a gtk theme for Windows
-	if runtime.GOOS == "windows" {
-		theme, err := gtk.CssProviderNew()
-		errorCheck(err)
-
-		err = theme.LoadFromPath(getPath("ui", "win10-theme", "gtk.css"))
-		logOnError(err, "could not get win10 theme, continuing with default theme")
-
-		gtk.AddProviderForScreen(screen, theme, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-	}
 
 	// add own customizations (not much lol)
 	provider, err := gtk.CssProviderNew()
