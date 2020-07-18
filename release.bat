@@ -1,6 +1,9 @@
 if not exist "build" mkdir build
 
-xcopy ui build /E
+rmdir build\ui
+mkdir build\ui
+
+xcopy ui build\ui /E /y
 
 go build -o build
 

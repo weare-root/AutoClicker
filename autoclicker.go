@@ -11,6 +11,7 @@ import (
 
 var toggled bool = false
 
+// doClick simulates the mouse click
 func doClick(ratio float32, timespan int, mb string) {
 	robotgo.MouseToggle("down", mb)
 	time.Sleep(time.Duration(int(float32(timespan)*ratio)) * time.Millisecond)
@@ -18,12 +19,13 @@ func doClick(ratio float32, timespan int, mb string) {
 	time.Sleep(time.Duration(int(float32(timespan)*(1-ratio))) * time.Millisecond)
 }
 
+// doPress simulates a keyboard press
 func doPress(ratio float32, timespan int, key string) {
 	robotgo.KeyTap(key)
 	time.Sleep(time.Duration(int(float32(timespan)*ratio)) * time.Millisecond)
 }
 
-// startClicker starts the clicking process
+// startMouseClicker starts the clicking process
 // mb = (left|center|right)
 // lower = min click amount
 // upper = max click amount
@@ -44,11 +46,13 @@ OUTER:
 	}
 }
 
+// startClicker starts either the mouse clicker or the keyboard clicker
 func startClicker(lower float32, upper float32, ratio float32, timespan int) {
 	key := strings.TrimSpace(getKey())
 	if key == "" {
 		return
 	}
+	log.Println("starting clicker")
 	if key == "left" || key == "right" || key == "center" {
 		startMouseClicker(lower, upper, ratio, timespan, key)
 		return
@@ -68,11 +72,10 @@ OUTER:
 	}
 }
 
+// stopClicker stops the clicker
 func stopClicker() {
+	if toggled {
+		log.Println("Stopping clicker")
+	}
 	toggled = false
-}
-
-func toggle() bool {
-	toggled = !toggled
-	return toggled
 }

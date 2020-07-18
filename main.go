@@ -14,23 +14,18 @@ import (
 
 const appID = "at.wunderwuzis.AutoClicker"
 
-var (
-	gApplication *gtk.Application
-	gBuilder     *gtk.Builder
-	gWin         *gtk.ApplicationWindow
-)
+var gBuilder *gtk.Builder
 
 // variables for runtime
 var (
 	activationBtn = ""
-	duration      = 0
 	listening     = false
 	listeningBtn  *gtk.Button
 	listeningEn   *gtk.Entry
 	shouldListen  = false
 )
 
-// definitions for the elements
+// definitions for the widgets
 var (
 	rbLeft   *gtk.RadioButton
 	rbMiddle *gtk.RadioButton
@@ -59,7 +54,6 @@ func main() {
 	// Create a new application.
 	application, err := gtk.ApplicationNew(appID, glib.APPLICATION_FLAGS_NONE)
 	errorCheck(err)
-	gApplication = application
 
 	// set dark mode :)
 	settings, err := gtk.SettingsGetDefault()
@@ -75,6 +69,7 @@ func main() {
 
 	// Connect function to application activate event
 	application.Connect("activate", func() {
+		log.Println("application activation")
 		onActivate(application)
 	})
 
@@ -89,15 +84,11 @@ func main() {
 }
 
 func onActivate(application *gtk.Application) {
-	log.Println("application activation")
 	log.Println("UI is being built")
+	// get the builder
 	builder, err := gtk.BuilderNewFromFile(getPath("ui", "main.glade"))
 	errorCheck(err)
 	gBuilder = builder
-
-	// Get the object with the id of "main_window".
-	obj, err := builder.GetObject("main_window")
-	errorCheck(err)
 
 	// add signals
 	// Map the handlers to callback functions, and connect the signals
@@ -106,16 +97,12 @@ func onActivate(application *gtk.Application) {
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
 		"rbCustom_toggled":       rbCustomToggled,
-		"on_duration_insert":     onDurationInsert,
 	}
-
 	builder.ConnectSignals(signals)
 	log.Println("connected signals")
 
-	// Verify that the object is a pointer to a gtk.ApplicationWindow.
-	win, err := isApplicationWindow(obj)
-	errorCheck(err)
-	gWin = win
+	// get the window
+	win := getApplicationWindow("main_window")
 
 	//add styling
 	screen := win.GetScreen()
@@ -126,7 +113,7 @@ func onActivate(application *gtk.Application) {
 		errorCheck(err)
 
 		err = theme.LoadFromPath(getPath("ui", "win10-theme", "gtk.css"))
-		errorCheck(err)
+		logOnError(err, "could not get win10 theme, continuing with default theme")
 
 		gtk.AddProviderForScreen(screen, theme, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 	}
@@ -139,11 +126,14 @@ func onActivate(application *gtk.Application) {
 	gtk.AddProviderForScreen(screen, provider, gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 	log.Println("Applied custom styles")
 
+	// i think this is so the window can listen to keyboard events
 	win.AddEvents(int(gdk.KEY_PRESS_MASK))
 
+	// add the window to the application
 	application.AddWindow(win)
 	// Show the Window and all of its components.
 	win.Show()
+	log.Println("built the UI and showing it")
 
 	getWidgets()
 
@@ -172,6 +162,7 @@ func getWidgets() {
 	scCPSHigher = getScale("scCPSHigher")
 	scTimespan = getScale("scTimespan")
 	scRatio = getScale("scRatio")
+	log.Println("got all necessary widgets")
 
 	adLower = getAdjustment("adLower")
 	adHigher = getAdjustment("adHigher")

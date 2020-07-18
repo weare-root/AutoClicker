@@ -1,11 +1,10 @@
 package main
 
 import (
-	"strconv"
-
 	"github.com/gotk3/gotk3/gtk"
 )
 
+// activationBtnClicked handles the event when the button for the activation key is clicked
 func activationBtnClicked() {
 	stopClicker()
 	if !listening {
@@ -23,6 +22,7 @@ func activationBtnClicked() {
 	}
 }
 
+// customBtnClicked handles the event when the button for the custom keyboard press is clicked
 func customBtnClicked() {
 	stopClicker()
 	if !listening {
@@ -40,29 +40,7 @@ func customBtnClicked() {
 	}
 }
 
-// listen to the custom radio button
-func rbCustomToggled() {
-	btObj, err := gBuilder.GetObject("btCustom")
-	errorCheck(err)
-	bt, err := isButton(btObj)
-	errorCheck(err)
-
-	rbObj, err := gBuilder.GetObject("rbCustom")
-	errorCheck(err)
-	rb, err := isRadioButton(rbObj)
-	errorCheck(err)
-
-	bt.SetSensitive(rb.GetActive())
-}
-
-func onDurationInsert(en *gtk.Entry, text string) bool {
-	before, _ := en.GetText()
-	parsed, err := strconv.ParseInt(before+text, 10, 64)
-	if err != nil {
-		defer execMainThread(func() {
-			en.SetText(before)
-		})
-	}
-	duration = int(parsed)
-	return false
+// rbCustomToggled listen to the custom radio button
+func rbCustomToggled(rbCustom *gtk.RadioButton) {
+	btCustom.SetSensitive(rbCustom.GetActive())
 }

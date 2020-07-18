@@ -46,3 +46,21 @@ func getAdjustment(id string) *gtk.Adjustment {
 	errorCheck(err)
 	return ad
 }
+
+func getWindow(id string) *gtk.Window {
+	win, err := isWindow(getObject(id))
+	errorCheck(err)
+	return win
+}
+
+func getApplicationWindow(id string) *gtk.ApplicationWindow {
+	win, err := isApplicationWindow(getObject(id))
+	errorCheck(err)
+	return win
+}
+
+func getScrolledWindow(id string) *gtk.ScrolledWindow {
+	win, err := isScrolledWindow(getObject(id))
+	errorCheck(err)
+	return win
+}
