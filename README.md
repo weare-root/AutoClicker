@@ -25,6 +25,8 @@ Packages used:
 - [ ] fix icon
 - [ ] profiles/saving configs
 
+Inspect the current state on [Trello][8]
+
 made by [@0Adiber][2] 🐊 & [@TheCrether][3]
 
 [1]: https://www.figma.com/file/Wjc2fEXADEVzW5atpqO6hf/AutoClicker
@@ -34,3 +36,4 @@ made by [@0Adiber][2] 🐊 & [@TheCrether][3]
 [5]: https://github.com/gotk3/gotk3
 [6]: https://github.com/go-vgo/robotgo
 [7]: https://github.com/robotn/gohook
+[8]: https://trello.com/b/c3eEI516/autoclicker
