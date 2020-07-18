@@ -1,11 +1,11 @@
 # AutoClicker 🏎️🖱️
 
-AutoClicker is what the title says a program, which does all the heavy lifting for you (=Creating Mouse Clicks). It can also execute Keypresses.
-This AutoClicker has a lot of features✨, demanded by one of my friends, to make it one of a kind.
+AutoClicker is what the title says, a program, which does all the heavy lifting for you (=Creating Mouse Clicks). It can also execute Keypresses.
+This AutoClicker has a lot of features✨ and a request of one of one of @0Adiber's friends.
 
 ## Download
 
-The Downloads are found on the [Releases][4] page!
+The downloads are found on the [Releases][4] page!
 
 ## How
 
