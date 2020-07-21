@@ -1,10 +1,17 @@
-# AutoClicker 🏎️🖱️
+<h1 align="center">AutoClicker 🏎️🖱️</h1>
+
+<p align="center">
+  <img alt="license" src="https://img.shields.io/github/license/weare-root/autoclicker?style=for-the-badge" />
+  <img alt="release" src="https://img.shields.io/github/v/release/weare-root/autoclicker?color=green&style=for-the-badge" />
+  <img alt="downloads" src="https://img.shields.io/github/downloads/weare-root/autoclicker/1.0.0/total?color=blue&style=for-the-badge" />
+</p>
+
+---
 
 AutoClicker is what the title says, a program, which does all the heavy lifting for you (=Creating Mouse Clicks). It can also execute Keypresses.
 This AutoClicker has a lot of features✨ and a request of one of one of @0Adiber's friends.
 
 ## Download
-
 The downloads are found on the [Releases][4] page!
 
 ## How
