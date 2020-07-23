@@ -1,0 +1,14 @@
+before_install:
+  - sudo apt update
+  - sudo apt install libgtk-3 libglib2 libgdk-pixbuf2 -y
+language: go
+go:
+  - 1.14.x
+  - master
+sudo: true
+os:
+  - linux
+  - osx
+script:
+  - go build
+dist: bionic
