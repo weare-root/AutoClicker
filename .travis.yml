@@ -1,13 +1,14 @@
 before_install:
   - sudo apt update
-  - sudo apt install libgtk-3-0 libglib2.0-0 libgdk-pixbuf2.0-0 -y
+  - sudo apt install pkg-config -y
+  - sudo apt install libgtk-3-0 libglib2.0-0 libgdk-pixbuf2.0-0 libx11-dev -y
 language: go
 go:
   - 1.14.x
 sudo: true
 os:
   - linux
-  - osx
+  # - osx
 script:
   - go build
 dist: bionic
