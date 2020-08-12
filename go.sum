@@ -39,6 +39,7 @@ github.com/vcaesar/imgo v0.10.0 h1:6TOWsQFHdxIq7UVijeKBnhOymO+lDuRJwuP7VhSeR9U=
 github.com/vcaesar/imgo v0.10.0/go.mod h1:52+3yYrTNjWKh+CkQozNRCLWCE/X666yAWPGbYC3DZI=
 github.com/vcaesar/tt v0.10.0 h1:jPtFiRRnCOXVakd5ujCed2dwWwTs91wh8W1iHeUIfc0=
 github.com/vcaesar/tt v0.10.0/go.mod h1:GHPxQYhn+7OgKakRusH7KJ0M5MhywoeLb8Fcffs/Gtg=
+github.com/weare-root/AutoClicker v0.0.0-20200723204453-25955a4922bf h1:GGVnsb2HjQ+aB1cFOEdnhjTc2Bx9xf5O4ezzeGf3t/A=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/image v0.0.0-20190910094157-69e4b8554b2a/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/image v0.0.0-20200430140353-33d19683fad8 h1:6WW6V3x1P/jokJBpRQYUJnMHRP6isStQwCozxnU7XQw=

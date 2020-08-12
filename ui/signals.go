@@ -1,12 +1,13 @@
-package main
+package ui
 
 import (
 	"github.com/gotk3/gotk3/gtk"
+	"github.com/weare-root/AutoClicker/autoclicker"
 )
 
 // activationBtnClicked handles the event when the button for the activation key is clicked
 func activationBtnClicked() {
-	stopClicker()
+	autoclicker.StopClicker()
 	if !listening {
 		shouldListen = true
 		listeningBtn = btKey
@@ -24,7 +25,7 @@ func activationBtnClicked() {
 
 // customBtnClicked handles the event when the button for the custom keyboard press is clicked
 func customBtnClicked() {
-	stopClicker()
+	autoclicker.StopClicker()
 	if !listening {
 		shouldListen = true
 		listeningBtn = btCustom
@@ -43,4 +44,8 @@ func customBtnClicked() {
 // rbCustomToggled listen to the custom radio button
 func rbCustomToggled(rbCustom *gtk.RadioButton) {
 	btCustom.SetSensitive(rbCustom.GetActive())
+}
+
+func lbLanguageChanged(lbLanguage *gtk.ComboBoxText) {
+
 }

@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"os"
@@ -6,13 +6,14 @@ import (
 	"path/filepath"
 
 	"github.com/gotk3/gotk3/glib"
+	"github.com/weare-root/AutoClicker/errs"
 )
 
 func isHoldingMode() bool {
 	rbObj, err := gBuilder.GetObject("rbHold")
-	errorCheck(err)
+	errs.ErrorCheck(err)
 	rbHold, err := isRadioButton(rbObj)
-	errorCheck(err)
+	errs.ErrorCheck(err)
 
 	return rbHold.GetActive()
 }
@@ -26,7 +27,7 @@ func getKey() string {
 	if rbCustom.GetActive() {
 		// custom radio button is selected
 		str, err := enCustom.GetText()
-		errorCheck(err)
+		errs.ErrorCheck(err)
 		return str
 	} else if rbLeft.GetActive() {
 		return "left"
@@ -43,6 +44,6 @@ func getPath(p ...string) string {
 		base = os.Args[0]
 	}
 	str, err := filepath.Abs(path.Join(filepath.Dir(base), path.Join(p...)))
-	errorCheck(err)
+	errs.ErrorCheck(err)
 	return str
 }

@@ -1,8 +1,7 @@
-package main
+package ui
 
 import (
 	"errors"
-	"log"
 
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
@@ -111,16 +110,10 @@ func isAdjustment(obj glib.IObject) (*gtk.Adjustment, error) {
 	return nil, errors.New("not a *gtk.CheckButton")
 }
 
-func errorCheck(e error) {
-	if e != nil {
-		// panic for any errors.
-		log.Panic(e)
+func isComboBoxText(obj glib.IObject) (*gtk.ComboBoxText, error) {
+	// make type assertion (as per gtk.go).
+	if combobox, ok := obj.(*gtk.ComboBoxText); ok {
+		return combobox, nil
 	}
-}
-
-func logOnError(e error, msg string) {
-	if e != nil {
-		log.Println(msg)
-		log.Println(e)
-	}
+	return nil, errors.New("not a *gtk.ComboBoxText")
 }

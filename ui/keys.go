@@ -1,4 +1,4 @@
-package main
+package ui
 
 var (
 	raw2key = map[uint16]string{ // https://github.com/wesbos/keycodes

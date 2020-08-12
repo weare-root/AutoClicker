@@ -1,9 +1,9 @@
 if not exist "build" mkdir build
 
-rmdir build\ui
-mkdir build\ui
+rmdir build\resources
+mkdir build\resources
 
-xcopy ui build\ui /E /y
+xcopy resources build\resources /E /y
 
 go build -o build -ldflags -H=windowsgui
 

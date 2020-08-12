@@ -1,4 +1,4 @@
-module github.com/wunderwuzis/AutoClicker
+module github.com/weare-root/AutoClicker
 
 go 1.14
 
