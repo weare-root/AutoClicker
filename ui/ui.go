@@ -29,6 +29,7 @@ var (
 	rbRight  *gtk.RadioButton
 	rbCustom *gtk.RadioButton
 	rbHold   *gtk.RadioButton
+	rbSwitch *gtk.RadioButton
 
 	btKey    *gtk.Button
 	btCustom *gtk.Button
@@ -50,13 +51,14 @@ var (
 
 	lbActivation     *gtk.Label
 	lbActivationKey  *gtk.Label
-	lbActivationmode *gtk.Label
+	lbActivationMode *gtk.Label
 	lbTimespan       *gtk.Label
 	lbRatio          *gtk.Label
 	lbCPSLower       *gtk.Label
 	lbCPSHigher      *gtk.Label
 	lbClicks         *gtk.Label
 	lbLanguage       *gtk.Label
+	lbChooseLanguage *gtk.Label
 )
 
 // OnActivate is used for when the application starts up
@@ -73,8 +75,8 @@ func OnActivate(application *gtk.Application) {
 	signals := map[string]interface{}{
 		"activation_btn_clicked": activationBtnClicked,
 		"custom_btn_clicked":     customBtnClicked,
-		"rbCustom_toggled":       rbCustomToggled,
-		"lbLanguage_changed":     lbLanguageChanged,
+		"rb_custom_toggled":      rbCustomToggled,
+		"cb_language_changed":    cbLanguageChanged,
 	}
 	builder.ConnectSignals(signals)
 	log.Println("connected signals")
@@ -107,6 +109,8 @@ func OnActivate(application *gtk.Application) {
 
 	getWidgets()
 
+	cbLanguageChanged(cbLanguage)
+
 	go listenToKeyboard()
 
 	// go startClicker(10, 15, 0.5, 1000, "left")
@@ -121,6 +125,7 @@ func getWidgets() {
 	rbRight = getRadioButton("rbRight")
 	rbCustom = getRadioButton("rbCustom")
 	rbHold = getRadioButton("rbHold")
+	rbSwitch = getRadioButton("rbSwitch")
 
 	btKey = getButton("btKey")
 	btCustom = getButton("btCustom")
@@ -137,6 +142,19 @@ func getWidgets() {
 	adHigher = getAdjustment("adHigher")
 	adTimespan = getAdjustment("adTimespan")
 	adRatio = getAdjustment("adRatio")
+
+	cbLanguage = getComboBoxText("cbLanguage")
+
+	lbActivation = getLabel("lbActivation")
+	lbActivationKey = getLabel("lbActivationKey")
+	lbActivationMode = getLabel("lbActivationMode")
+	lbTimespan = getLabel("lbTimespan")
+	lbRatio = getLabel("lbRatio")
+	lbCPSLower = getLabel("lbCPSLower")
+	lbCPSHigher = getLabel("lbCPSHigher")
+	lbClicks = getLabel("lbClicks")
+	lbLanguage = getLabel("lbLanguage")
+	lbChooseLanguage = getLabel("lbChooseLanguage")
 
 	log.Println("got all necessary widgets")
 }

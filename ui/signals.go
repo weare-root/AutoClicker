@@ -46,6 +46,7 @@ func rbCustomToggled(rbCustom *gtk.RadioButton) {
 	btCustom.SetSensitive(rbCustom.GetActive())
 }
 
-func lbLanguageChanged(lbLanguage *gtk.ComboBoxText) {
-
+func cbLanguageChanged(lbLanguage *gtk.ComboBoxText) {
+	data := readTranslation(lbLanguage.GetActiveID())
+	applyTranslation(data)
 }

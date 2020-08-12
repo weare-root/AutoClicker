@@ -1,0 +1,19 @@
+{
+  "activation": "Activation",
+  "activationkey": "Activation key",
+  "activationmode": "Activation mode",
+  "hold": "Hold",
+  "switch": "Switch",
+  "timespan": "Timespan in where the clicks should be executed (milliseconds)",
+  "ratio": "Click ratio (proportion from click to wait time) (percent)",
+  "cpslower": "Lower limit",
+  "cpshigher": "Upper limit",
+  "clicks": "Clicks",
+  "leftmb": "Left mouse button",
+  "middlemb": "Middle mouse button",
+  "rightmb": "Right mouse button",
+  "custom": "Custom key",
+  "choosekey": "Choose a key",
+  "language": "Language",
+  "chooselanguage": "Choose language"
+}

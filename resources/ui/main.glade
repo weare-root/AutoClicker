@@ -121,8 +121,8 @@
                       <object class="GtkLabel" id="lbTimespan">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Dauer in der die Klicks ausgeführt
-werden sollen (in Millisekunden)</property>
+                        <property name="label" translatable="yes">Dauer in der die Klicks ausgeführt werden sollen (in Millisekunden)</property>
+                        <property name="single_line_mode">True</property>
                         <property name="xalign">0</property>
                       </object>
                       <packing>
@@ -183,8 +183,8 @@ werden sollen (in Millisekunden)</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">Klickrate (Verhältnis von Mausklick
-zu Wartezeit) (in Prozent)</property>
+                        <property name="label" translatable="yes">Klickrate (Verhältnis von Mausklick zu Wartezeit) (in Prozent)</property>
+                        <property name="single_line_mode">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -488,7 +488,7 @@ zu Wartezeit) (in Prozent)</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
                             <property name="group">rbLeft</property>
-                            <signal name="toggled" handler="rbCustom_toggled" swapped="no"/>
+                            <signal name="toggled" handler="rb_custom_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -584,18 +584,11 @@ zu Wartezeit) (in Prozent)</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="active">0</property>
-                        <property name="has_entry">True</property>
                         <items>
                           <item id="en" translatable="yes">English</item>
                           <item id="de" translatable="yes">Deutsch</item>
                         </items>
-                        <signal name="changed" handler="lbLanguage_changed" swapped="no"/>
-                        <child internal-child="entry">
-                          <object class="GtkEntry">
-                            <property name="can_focus">False</property>
-                            <property name="text" translatable="yes">English</property>
-                          </object>
-                        </child>
+                        <signal name="changed" handler="cb_language_changed" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>

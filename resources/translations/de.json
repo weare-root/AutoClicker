@@ -1,3 +1,19 @@
 {
-  
+  "activation": "Aktivierung",
+  "activationkey": "Aktivierungstaste",
+  "activationmode": "Aktivierungsmodus",
+  "hold": "halten",
+  "switch": "umschalten",
+  "timespan": "Dauer in der die Klicks ausgeführt\nwerden sollen (in Millisekunden)",
+  "ratio": "Klickrate (Verhältnis von Mausklick\nzu Wartezeit) (in Prozent)",
+  "cpslower": "Untere Grenze",
+  "cpshigher": "Obere Grenze",
+  "clicks": "Klicks",
+  "leftmb": "Linke Maustaste",
+  "middlemb": "Mittlere Maustaste",
+  "rightmb": "Rechte Maustaste",
+  "custom": "Benutzerdefinierte Taste",
+  "choosekey": "Taste auswählen",
+  "language": "Sprache",
+  "chooselanguage": "Sprache auswählen"
 }
